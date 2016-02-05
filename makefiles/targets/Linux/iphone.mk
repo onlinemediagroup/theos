@@ -5,15 +5,17 @@ THEOS_TARGET_NAME := iphone
 _THEOS_TARGET_CC := clang
 _THEOS_TARGET_CXX := clang++
 
-SDKTARGET ?= armv7-apple-darwin11
-SDKBINPATH ?= $(THEOS)/toolchain/$(THEOS_PLATFORM_NAME)/$(THEOS_TARGET_NAME)/bin
+# SDKTARGET ?= armv7-apple-darwin11
+# SDKBINPATH ?= $(THEOS)/toolchain/$(THEOS_PLATFORM_NAME)/$(THEOS_TARGET_NAME)/bin
+SDKTARGET ?= arm-apple-darwin11
+SDKBINPATH ?= /nix/store/l15wifx86xcw9pvyndjpah8g0vs4a962-ios-cross-compile-9.2/bin
 
 _SDKVERSION := $(or $(__THEOS_TARGET_ARG_$(word 1,$(_THEOS_TARGET_ARG_ORDER))),$(SDKVERSION))
 _THEOS_TARGET_SDK_VERSION := $(or $(_SDKVERSION),latest)
 
 _SDK_DIR := $(THEOS)/sdks
 _IOS_SDKS := $(sort $(patsubst $(_SDK_DIR)/iPhoneOS%.sdk,%,$(wildcard $(_SDK_DIR)/iPhoneOS*.sdk)))
-_LATEST_SDK := $(word $(words $(_IOS_SDKS)),$(_IOS_SDKS))
+_LATEST_SDK := 9.2 #$(word $(words $(_IOS_SDKS)),$(_IOS_SDKS))
 
 ifeq ($(_THEOS_TARGET_SDK_VERSION),latest)
 override _THEOS_TARGET_SDK_VERSION := $(_LATEST_SDK)
